@@ -186,22 +186,6 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['oauth_tokens']['Row'], 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Database['public']['Tables']['oauth_tokens']['Insert']>;
       };
-      action_items: {
-        Row: {
-          id: string;
-          tenant_id: string;
-          client_id: string;
-          window_title: string;
-          description: string;
-          urgency: string;
-          due_date: string | null;
-          window_type: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: Omit<Database['public']['Tables']['action_items']['Row'], 'id' | 'created_at' | 'updated_at'>;
-        Update: Partial<Database['public']['Tables']['action_items']['Insert']>;
-      };
     };
   };
 }
