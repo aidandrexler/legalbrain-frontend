@@ -90,11 +90,15 @@ export default function DashboardPage() {
       setActionItems((aiData as ActionItem[]) ?? []);
       setDiagnostics((diagData as Diagnostic[]) ?? []);
 
-      try {
-        await api.health();
-        setSystemHealthy(true);
-      } catch {
-        setSystemHealthy(false);
+      if (process.env.NEXT_PUBLIC_API_URL) {
+        try {
+          await api.health();
+          setSystemHealthy(true);
+        } catch {
+          setSystemHealthy(false);
+        }
+      } else {
+        setSystemHealthy(null);
       }
     } catch {
       setError('Failed to load dashboard data.');
@@ -192,13 +196,13 @@ export default function DashboardPage() {
           <div className="flex items-center gap-2 mb-1">
             <span
               className="w-3 h-3 rounded-full flex-shrink-0"
-              style={{ backgroundColor: systemHealthy === null ? '#C9A84C' : systemHealthy ? '#3A6B4B' : '#C0392B' }}
+              style={{ backgroundColor: systemHealthy === null ? '#9CA3AF' : systemHealthy ? '#3A6B4B' : '#C0392B' }}
             />
             <p
               className="text-lg font-bold"
               style={{ fontFamily: "'Playfair Display', serif", color: '#2C2C2C' }}
             >
-              {systemHealthy === null ? 'Checking' : systemHealthy ? 'Healthy' : 'Issue'}
+              {systemHealthy === null ? 'Not Connected' : systemHealthy ? 'Healthy' : 'Issue'}
             </p>
           </div>
           <p className="text-sm" style={{ color: '#6B6B6B' }}>System</p>
