@@ -38,7 +38,7 @@ export interface Database {
           marital_status: string;
           spouse_first_name: string;
           number_of_children: number;
-          estate_size: number;
+          estate_size_estimate number;
           net_worth: number;
           annual_income: number;
           homestead_declared: boolean;
@@ -166,7 +166,7 @@ export interface Database {
           tenant_id: string;
           effective_month: string;
           rate_7520: number;
-          afr_mid_term: number;
+          afr_mid: number;
           created_at: string;
         };
         Insert: Omit<Database['public']['Tables']['rate_table']['Row'], 'id' | 'created_at'>;
@@ -186,7 +186,7 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['oauth_tokens']['Row'], 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Database['public']['Tables']['oauth_tokens']['Insert']>;
       };
-      planning_windows: {
+      action_items: {
         Row: {
           id: string;
           tenant_id: string;
@@ -199,8 +199,8 @@ export interface Database {
           created_at: string;
           updated_at: string;
         };
-        Insert: Omit<Database['public']['Tables']['planning_windows']['Row'], 'id' | 'created_at' | 'updated_at'>;
-        Update: Partial<Database['public']['Tables']['planning_windows']['Insert']>;
+        Insert: Omit<Database['public']['Tables']['action_items']['Row'], 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Database['public']['Tables']['action_items']['Insert']>;
       };
     };
   };

@@ -10,7 +10,7 @@ import { formatDate, URGENCY_COLORS } from '@/lib/utils';
 
 interface RateRow {
   rate_7520: number;
-  afr_mid_term: number;
+  afr_mid: number;
 }
 
 interface PlanningWindow {
@@ -70,13 +70,13 @@ export default function TemporalPage() {
     ] = await Promise.all([
       supabase
         .from('rate_table')
-        .select('rate_7520, afr_mid_term')
+        .select('rate_7520, afr_mid')
         .eq('tenant_id', tenant_id)
         .order('effective_month', { ascending: false })
         .limit(1)
         .maybeSingle(),
       supabase
-        .from('planning_windows')
+        .from('action_items')
         .select('*, clients(first_name, last_name)')
         .eq('tenant_id', tenant_id)
         .order('created_at', { ascending: false }),
@@ -168,7 +168,7 @@ export default function TemporalPage() {
             <div className="flex items-center justify-between">
               <span className="text-sm" style={{ color: '#6B6B6B' }}>AFR Mid-Term Rate</span>
               <span className="font-semibold text-sm" style={{ color: '#2C2C2C' }}>
-                {rate ? `${rate.afr_mid_term}%` : 'Not set'}
+                {rate ? `${rate.afr_mid}%` : 'Not set'}
               </span>
             </div>
             <div className="pt-2">

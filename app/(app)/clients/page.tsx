@@ -12,7 +12,7 @@ interface ClientRow {
   id: string;
   first_name: string;
   last_name: string;
-  estate_size: number;
+  estate_size_estimate number;
   status: string;
   diagnostics?: { diagnostic_type: string; created_at: string }[];
 }
@@ -33,7 +33,7 @@ export default function ClientsPage() {
     setError('');
     const { data, error: err } = await supabase
       .from('clients')
-      .select('id, first_name, last_name, estate_size, status, diagnostics(diagnostic_type, created_at)')
+      .select('id, first_name, last_name, estate_size_estimate status, diagnostics(diagnostic_type, created_at)')
       .eq('tenant_id', tenant_id)
       .order('updated_at', { ascending: false });
 
@@ -166,7 +166,7 @@ export default function ClientsPage() {
                         </Link>
                       </td>
                       <td className="px-4 py-3" style={{ color: '#2C2C2C' }}>
-                        {c.estate_size > 0 ? formatCurrency(c.estate_size) : '—'}
+                        {c.estate_size_estimate> 0 ? formatCurrency(c.estate_size_estimate : '—'}
                       </td>
                       <td className="px-4 py-3">
                         <span
@@ -213,7 +213,7 @@ export default function ClientsPage() {
                     </span>
                   </div>
                   <p className="text-sm" style={{ color: '#6B6B6B' }}>
-                    {c.estate_size > 0 ? formatCurrency(c.estate_size) : 'No estate value'} · {lastDx ? getDiagnosticLabel(lastDx) : 'No diagnostics'}
+                    {c.estate_size_estimate> 0 ? formatCurrency(c.estate_size_estimate : 'No estate value'} · {lastDx ? getDiagnosticLabel(lastDx) : 'No diagnostics'}
                   </p>
                 </Link>
               );

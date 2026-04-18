@@ -21,7 +21,7 @@ interface Client {
   marital_status: string;
   spouse_first_name: string;
   number_of_children: number;
-  estate_size: number;
+  estate_size_estimate number;
   net_worth: number;
   annual_income: number;
   homestead_declared: boolean;
@@ -131,13 +131,13 @@ export default function ClientDetailPage({ params }: { params: { id: string } })
           </h1>
           <div className="flex items-center gap-3 mt-2 flex-wrap">
             <span
-              className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[client.status] ?? 'bg-gray-100 text-gray-700'}`}
+              className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[client.client_status] ?? 'bg-gray-100 text-gray-700'}`}
             >
-              {client.status.replace(/_/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase())}
+              {client.client_status.replace(/_/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase())}
             </span>
-            {client.estate_size > 0 && (
+            {client.estate_size_estimate> 0 && (
               <span className="text-sm" style={{ color: '#6B6B6B' }}>
-                {formatCurrency(client.estate_size)}
+                {formatCurrency(client.estate_size_estimate}
               </span>
             )}
             {client.is_physician && (

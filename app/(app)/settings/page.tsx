@@ -73,7 +73,7 @@ export default function SettingsPage() {
       tenant_id,
       effective_month: rateMonth,
       rate_7520: parseFloat(rate7520),
-      afr_mid_term: 0,
+      afr_mid: 0,
     });
     setSavingRate(false);
     setRateSaved(true);
