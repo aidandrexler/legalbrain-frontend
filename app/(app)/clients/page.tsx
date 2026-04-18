@@ -13,7 +13,7 @@ interface ClientRow {
   first_name: string;
   last_name: string;
   estate_size_estimate: number;
-  status: string;
+  client_status: string;
   diagnostics?: { diagnostic_type: string; created_at: string }[];
 }
 
@@ -33,7 +33,7 @@ export default function ClientsPage() {
     setError('');
     const { data, error: err } = await supabase
       .from('clients')
-      .select('id, first_name, last_name, estate_size_estimate status, diagnostics(diagnostic_type, created_at)')
+      .select('id, first_name, last_name, estate_size_estimate, client_status, diagnostics(diagnostic_type, created_at)')
       .eq('tenant_id', tenant_id)
       .order('updated_at', { ascending: false });
 
@@ -166,13 +166,13 @@ export default function ClientsPage() {
                         </Link>
                       </td>
                       <td className="px-4 py-3" style={{ color: '#2C2C2C' }}>
-                        {c.estate_size_estimate> 0 ? formatCurrency(c.estate_size_estimate : '—'}
+                        {c.estate_size_estimate> 0 ? formatCurrency(c.estate_size_estimate) : '—'}
                       </td>
                       <td className="px-4 py-3">
                         <span
-                          className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[c.status] ?? 'bg-gray-100 text-gray-700'}`}
+                          className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[c.client_status] ?? 'bg-gray-100 text-gray-700'}`}
                         >
-                          {c.status.replace(/_/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase())}
+                          {c.client_status.replace(/_/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase())}
                         </span>
                       </td>
                       <td className="px-4 py-3" style={{ color: '#6B6B6B' }}>
@@ -208,12 +208,12 @@ export default function ClientsPage() {
                     <span className="font-medium" style={{ color: '#2C2C2C', fontFamily: "'Playfair Display', serif" }}>
                       {c.first_name} {c.last_name}
                     </span>
-                    <span className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[c.status] ?? 'bg-gray-100 text-gray-700'}`}>
-                      {c.status.replace(/_/g, ' ')}
+                    <span className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[c.client_status] ?? 'bg-gray-100 text-gray-700'}`}>
+                      {c.client_status.replace(/_/g, ' ')}
                     </span>
                   </div>
                   <p className="text-sm" style={{ color: '#6B6B6B' }}>
-                    {c.estate_size_estimate> 0 ? formatCurrency(c.estate_size_estimate : 'No estate value'} · {lastDx ? getDiagnosticLabel(lastDx) : 'No diagnostics'}
+                    {c.estate_size_estimate> 0 ? formatCurrency(c.estate_size_estimate) : 'No estate value'} · {lastDx ? getDiagnosticLabel(lastDx) : 'No diagnostics'}
                   </p>
                 </Link>
               );

@@ -42,7 +42,7 @@ interface Client {
   goal_risk_reduction: number;
   goal_liquidity: number;
   goal_simplicity: number;
-  status: string;
+  client_status: string;
   anticipated_sale_date: string | null;
   anticipated_inheritance_date: string | null;
   anticipated_inheritance_amount: number;
@@ -137,7 +137,7 @@ export default function ClientDetailPage({ params }: { params: { id: string } })
             </span>
             {client.estate_size_estimate> 0 && (
               <span className="text-sm" style={{ color: '#6B6B6B' }}>
-                {formatCurrency(client.estate_size_estimate}
+                {formatCurrency(client.estate_size_estimate)}
               </span>
             )}
             {client.is_physician && (
