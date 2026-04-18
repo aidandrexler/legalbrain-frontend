@@ -21,7 +21,7 @@ interface Client {
   marital_status: string;
   spouse_first_name: string;
   number_of_children: number;
-  estate_size_estimate number;
+  estate_size_estimate: number;
   net_worth: number;
   annual_income: number;
   homestead_declared: boolean;

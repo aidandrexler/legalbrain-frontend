@@ -12,7 +12,7 @@ interface ClientRow {
   id: string;
   first_name: string;
   last_name: string;
-  estate_size_estimate number;
+  estate_size_estimate: number;
   status: string;
   diagnostics?: { diagnostic_type: string; created_at: string }[];
 }
