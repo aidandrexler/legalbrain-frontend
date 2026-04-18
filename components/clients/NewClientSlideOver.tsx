@@ -129,7 +129,7 @@ export default function NewClientSlideOver({ tenantId, onClose, onSaved }: Props
       marital_status: maritalStatus,
       spouse_first_name: maritalStatus === 'married' ? spouseFirstName : '',
       number_of_children: numberOfChildren,
-      estate_size_estimate estateSize,
+      estate_size_estimate: estateSize,
       net_worth: netWorth,
       annual_income: annualIncome,
       homestead_declared: homesteadDeclared,
