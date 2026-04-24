@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { useTenant } from '@/contexts/TenantContext';
 import { createClient } from '@/lib/supabase/client';
 import { api } from '@/lib/api';
@@ -44,7 +45,13 @@ export default function SettingsPage() {
   const [runningDigest, setRunningDigest] = useState(false);
 
   const [provisioningDemo, setProvisioningDemo] = useState(false);
+  const [demoStatus, setDemoStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [demoMessage, setDemoMessage] = useState('');
+  const [anthropicKey, setAnthropicKey] = useState('');
+  const [openaiKey, setOpenaiKey] = useState('');
+  const [savingApiKeys, setSavingApiKeys] = useState(false);
+  const [apiKeySuccess, setApiKeySuccess] = useState('');
+  const [apiKeyError, setApiKeyError] = useState('');
 
   useEffect(() => {
     const connected = searchParams.get('connected');
@@ -65,6 +72,36 @@ export default function SettingsPage() {
   useEffect(() => {
     if (!tenantLoading && tenant_id) fetchTokens();
   }, [tenant_id, tenantLoading, fetchTokens]);
+
+  useEffect(() => {
+    if (!tenant) return;
+    setAnthropicKey(tenant.anthropic_api_key_encrypted ?? '');
+    setOpenaiKey(tenant.openai_api_key_encrypted ?? '');
+  }, [tenant]);
+
+  const saveApiKeys = async () => {
+    if (!tenant_id) return;
+    setSavingApiKeys(true);
+    setApiKeySuccess('');
+    setApiKeyError('');
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from('tenants').update({
+        anthropic_api_key_encrypted: anthropicKey,
+        openai_api_key_encrypted: openaiKey
+      }).eq('id', tenant_id);
+      if (error) {
+        setApiKeyError(error.message);
+        return;
+      }
+      await refreshTenant();
+      setApiKeySuccess('API keys saved successfully');
+    } catch (err: unknown) {
+      setApiKeyError(err instanceof Error ? err.message : 'Failed to save API keys');
+    } finally {
+      setSavingApiKeys(false);
+    }
+  };
 
   const saveRate = async () => {
     if (!tenant_id || !rate7520) return;
@@ -94,12 +131,18 @@ export default function SettingsPage() {
   const provisionDemo = async () => {
     if (!tenant_id) return;
     setProvisioningDemo(true);
+    setDemoStatus('loading');
     setDemoMessage('');
     try {
-      await api.provisionSandbox(tenant_id);
-      setDemoMessage('Demo sandbox provisioned successfully. Refresh to see demo data.');
-    } catch {
-      setDemoMessage('Failed to provision demo sandbox.');
+      const res = await api.provisionSandbox(tenant_id);
+      if (res?.success === false) {
+        throw new Error(res?.detail || 'Failed to provision demo sandbox.');
+      }
+      setDemoStatus('success');
+      setDemoMessage('Demo ready — go to Clients');
+    } catch (err: unknown) {
+      setDemoStatus('error');
+      setDemoMessage(err instanceof Error ? err.message : 'Failed to provision demo sandbox.');
     }
     setProvisioningDemo(false);
   };
@@ -168,6 +211,52 @@ export default function SettingsPage() {
           <h2 className="font-semibold mb-4" style={{ fontFamily: "'Playfair Display', serif", color: '#2C2C2C', fontSize: 18 }}>
             System
           </h2>
+
+          <div className="mb-5 pb-5" style={{ borderBottom: '1px solid #E5E1DA' }}>
+            <h3 className="text-sm font-semibold mb-3" style={{ color: '#2C2C2C' }}>API Keys</h3>
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <label className="block text-xs font-medium mb-1" style={{ color: '#6B6B6B' }}>Anthropic API Key</label>
+                <input
+                  type="password"
+                  value={anthropicKey}
+                  onChange={e => setAnthropicKey(e.target.value)}
+                  className="w-full px-3 py-2 rounded-md text-sm outline-none"
+                  style={{ border: '1px solid #E5E1DA', fontFamily: "'Inter', sans-serif" }}
+                  placeholder="sk-ant-..."
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium mb-1" style={{ color: '#6B6B6B' }}>OpenAI API Key</label>
+                <input
+                  type="password"
+                  value={openaiKey}
+                  onChange={e => setOpenaiKey(e.target.value)}
+                  className="w-full px-3 py-2 rounded-md text-sm outline-none"
+                  style={{ border: '1px solid #E5E1DA', fontFamily: "'Inter', sans-serif" }}
+                  placeholder="sk-..."
+                />
+              </div>
+            </div>
+            <button
+              onClick={saveApiKeys}
+              disabled={savingApiKeys || !tenant_id}
+              className="px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
+              style={{ backgroundColor: savingApiKeys ? '#9A6F08' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
+            >
+              {savingApiKeys ? 'Saving...' : 'Save API Keys'}
+            </button>
+            {apiKeySuccess && (
+              <p className="mt-2 text-sm" style={{ color: '#166534', fontFamily: "'Inter', sans-serif" }}>
+                {apiKeySuccess}
+              </p>
+            )}
+            {apiKeyError && (
+              <p className="mt-2 text-sm" style={{ color: '#C0392B', fontFamily: "'Inter', sans-serif" }}>
+                {apiKeyError}
+              </p>
+            )}
+          </div>
 
           <div className="mb-5 pb-5" style={{ borderBottom: '1px solid #E5E1DA' }}>
             <h3 className="text-sm font-semibold mb-3" style={{ color: '#2C2C2C' }}>§7520 Rate Entry</h3>
@@ -246,14 +335,22 @@ export default function SettingsPage() {
             </p>
             <button
               onClick={provisionDemo}
-              disabled={provisioningDemo}
+              disabled={provisioningDemo || demoStatus === 'loading'}
               className="px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: provisioningDemo ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+              style={{ backgroundColor: provisioningDemo ? '#9A6F08' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
             >
-              {provisioningDemo ? 'Provisioning...' : 'Provision Demo Sandbox'}
+              {demoStatus === 'loading' ? 'Building demo...' : 'Build demo client'}
             </button>
-            {demoMessage && (
-              <p className="mt-2 text-sm" style={{ color: demoMessage.includes('Failed') ? '#C0392B' : '#3A6B4B', fontFamily: "'Inter', sans-serif" }}>
+            {demoStatus === 'success' && (
+              <p className="mt-2 text-sm" style={{ color: '#166534', fontFamily: "'Inter', sans-serif" }}>
+                {demoMessage}{' '}
+                <Link href="/clients" className="underline" style={{ color: '#166534' }}>
+                  Clients
+                </Link>
+              </p>
+            )}
+            {demoStatus === 'error' && (
+              <p className="mt-2 text-sm" style={{ color: '#C0392B', fontFamily: "'Inter', sans-serif" }}>
                 {demoMessage}
               </p>
             )}

@@ -21,6 +21,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { tenant } = useTenant();
   const [healthStatus, setHealthStatus] = useState<'green' | 'yellow' | 'red'>('yellow');
+  const [showApiBanner, setShowApiBanner] = useState(true);
 
   useEffect(() => {
     api.health()
@@ -28,11 +29,26 @@ export default function Sidebar() {
       .catch(() => setHealthStatus('red'));
   }, []);
 
+  useEffect(() => {
+    try {
+      const dismissed = sessionStorage.getItem('hide_api_key_banner');
+      if (dismissed === '1') setShowApiBanner(false);
+    } catch {}
+  }, []);
+
   const healthColor = {
     green: 'bg-green-400',
     yellow: 'bg-yellow-400',
     red: 'bg-red-400',
   }[healthStatus];
+  const missingAnthropicKey = !tenant?.anthropic_api_key_encrypted?.trim();
+
+  const dismissBanner = () => {
+    setShowApiBanner(false);
+    try {
+      sessionStorage.setItem('hide_api_key_banner', '1');
+    } catch {}
+  };
 
   return (
     <aside
@@ -115,6 +131,25 @@ export default function Sidebar() {
           </p>
         )}
       </div>
+      {missingAnthropicKey && showApiBanner && (
+        <div
+          className="px-3 py-2 flex items-center gap-2"
+          style={{ backgroundColor: '#B8860B', color: '#FFFFFF', fontSize: 12, fontFamily: "'Inter', sans-serif" }}
+        >
+          <span className="flex-1">Add API keys in Settings to enable diagnostics</span>
+          <Link href="/settings" className="underline text-white">
+            Settings
+          </Link>
+          <button
+            onClick={dismissBanner}
+            className="text-white"
+            aria-label="Dismiss API key banner"
+            title="Dismiss"
+          >
+            X
+          </button>
+        </div>
+      )}
     </aside>
   );
 }

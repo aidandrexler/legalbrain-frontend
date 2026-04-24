@@ -116,15 +116,20 @@ export default function LoginPage() {
             type="submit"
             disabled={loading}
             className="w-full py-2.5 rounded-lg text-sm font-semibold text-white transition-colors disabled:opacity-60"
-            style={{ backgroundColor: loading ? '#9A6425' : '#B87333' }}
+            style={{ backgroundColor: loading ? '#9A6F08' : '#B8860B' }}
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
+          <div className="text-right">
+            <Link href="/reset-password" className="text-sm hover:underline" style={{ color: '#B8860B' }}>
+              Forgot password?
+            </Link>
+          </div>
         </form>
 
         <p className="text-center text-sm text-[#6B6B6B] mt-6">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="font-medium hover:underline" style={{ color: '#B87333' }}>
+          <Link href="/signup" className="font-medium hover:underline" style={{ color: '#B8860B' }}>
             Sign up
           </Link>
         </p>
