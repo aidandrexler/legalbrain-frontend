@@ -61,7 +61,7 @@ function Toggle({ value, onChange, label }: { value: boolean; onChange: (v: bool
         type="button"
         onClick={() => onChange(!value)}
         className="relative inline-flex h-5 w-9 items-center rounded-full transition-colors"
-        style={{ backgroundColor: value ? '#B87333' : '#E5E1DA' }}
+        style={{ backgroundColor: value ? '#B8860B' : '#E5E1DA' }}
       >
         <span
           className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
@@ -78,7 +78,7 @@ function SaveButton({ onClick, saving }: { onClick: () => void; saving: boolean 
       onClick={onClick}
       disabled={saving}
       className="mt-3 px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-      style={{ backgroundColor: saving ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+      style={{ backgroundColor: saving ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
     >
       {saving ? 'Saving...' : 'Save'}
     </button>
@@ -252,10 +252,10 @@ export default function ProfileTab({ client, onUpdated }: Props) {
             <div key={label}>
               <div className="flex justify-between mb-1">
                 <span className="text-sm" style={{ color: '#2C2C2C', fontFamily: "'Inter', sans-serif" }}>{label}</span>
-                <span className="text-sm font-semibold" style={{ color: '#B87333', fontFamily: "'Inter', sans-serif" }}>{value}%</span>
+                <span className="text-sm font-semibold" style={{ color: '#B8860B', fontFamily: "'Inter', sans-serif" }}>{value}%</span>
               </div>
               <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#E5E1DA' }}>
-                <div className="h-full rounded-full transition-all" style={{ width: `${value}%`, backgroundColor: '#B87333' }} />
+                <div className="h-full rounded-full transition-all" style={{ width: `${value}%`, backgroundColor: '#B8860B' }} />
               </div>
             </div>
           ))}
@@ -263,7 +263,7 @@ export default function ProfileTab({ client, onUpdated }: Props) {
         <button
           onClick={() => setShowGoalModal(true)}
           className="mt-3 px-4 py-2 rounded-md text-sm font-medium transition-colors"
-          style={{ border: '1px solid #B87333', color: '#B87333', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
+          style={{ border: '1px solid #B8860B', color: '#B8860B', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
         >
           Edit Goals
         </button>
@@ -287,9 +287,9 @@ export default function ProfileTab({ client, onUpdated }: Props) {
                   <div key={label}>
                     <div className="flex justify-between mb-1">
                       <span className="text-sm" style={{ color: '#2C2C2C' }}>{label}</span>
-                      <span className="text-sm font-medium" style={{ color: '#B87333' }}>{value}%</span>
+                      <span className="text-sm font-medium" style={{ color: '#B8860B' }}>{value}%</span>
                     </div>
-                    <input type="range" min={0} max={100} value={value} onChange={e => set(Number(e.target.value))} className="w-full accent-[#B87333]" />
+                    <input type="range" min={0} max={100} value={value} onChange={e => set(Number(e.target.value))} className="w-full accent-[#B8860B]" />
                   </div>
                 ))}
               </div>
@@ -305,7 +305,7 @@ export default function ProfileTab({ client, onUpdated }: Props) {
                   onClick={saveGoals}
                   disabled={savingGoals || goalSum !== 100}
                   className="flex-1 py-2 rounded-md text-sm font-semibold text-white"
-                  style={{ backgroundColor: goalSum !== 100 ? '#E5E1DA' : '#B87333', color: goalSum !== 100 ? '#6B6B6B' : '#fff' }}
+                  style={{ backgroundColor: goalSum !== 100 ? '#E5E1DA' : '#B8860B', color: goalSum !== 100 ? '#6B6B6B' : '#fff' }}
                 >
                   {savingGoals ? 'Saving...' : 'Save'}
                 </button>

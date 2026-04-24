@@ -58,7 +58,7 @@ export default function ActionItems({ items, onComplete }: Props) {
             <Link
               href={`/clients/${item.client_id}`}
               className="text-sm font-medium hover:underline flex-shrink-0"
-              style={{ color: '#B87333', fontFamily: "'Inter', sans-serif" }}
+              style={{ color: '#B8860B', fontFamily: "'Inter', sans-serif" }}
             >
               {clientName}
             </Link>

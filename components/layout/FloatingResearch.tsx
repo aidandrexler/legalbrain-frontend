@@ -85,7 +85,7 @@ export default function FloatingResearch() {
       <button
         onClick={() => setOpen(true)}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2"
-        style={{ backgroundColor: '#B87333', color: 'white' }}
+        style={{ backgroundColor: '#B8860B', color: 'white' }}
         aria-label="Quick Research"
         title="Quick Research"
       >
@@ -127,13 +127,13 @@ export default function FloatingResearch() {
                   onKeyDown={e => e.key === 'Enter' && runSearch()}
                   placeholder="Ask any legal question..."
                   className="flex-1 px-3 py-2 border border-[#E5E1DA] rounded-md text-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                  style={{ '--tw-ring-color': '#B87333' } as React.CSSProperties}
+                  style={{ '--tw-ring-color': '#B8860B' } as React.CSSProperties}
                 />
                 <button
                   onClick={() => runSearch()}
                   disabled={loading || !question.trim()}
                   className="px-4 py-2 rounded-md text-sm font-medium text-white transition-colors disabled:opacity-50"
-                  style={{ backgroundColor: '#B87333' }}
+                  style={{ backgroundColor: '#B8860B' }}
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -148,7 +148,7 @@ export default function FloatingResearch() {
                       <div
                         key={i}
                         className="w-2 h-2 rounded-full animate-bounce"
-                        style={{ backgroundColor: '#B87333', animationDelay: `${i * 0.15}s` }}
+                        style={{ backgroundColor: '#B8860B', animationDelay: `${i * 0.15}s` }}
                       />
                     ))}
                   </div>
@@ -168,7 +168,7 @@ export default function FloatingResearch() {
                     <div
                       className="p-4 rounded-lg"
                       style={{
-                        borderLeft: '4px solid #B87333',
+                        borderLeft: '4px solid #B8860B',
                         backgroundColor: '#FDF9F5',
                       }}
                     >
@@ -205,7 +205,7 @@ export default function FloatingResearch() {
                           <span
                             key={i}
                             className="text-xs px-2 py-1 rounded border"
-                            style={{ borderColor: '#B87333', color: '#B87333' }}
+                            style={{ borderColor: '#B8860B', color: '#B8860B' }}
                           >
                             {c}
                           </span>

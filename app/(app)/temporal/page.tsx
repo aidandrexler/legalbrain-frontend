@@ -193,7 +193,7 @@ export default function TemporalPage() {
                   type="radio"
                   checked={scanMode === 'all'}
                   onChange={() => setScanMode('all')}
-                  className="accent-[#B87333]"
+                  className="accent-[#B8860B]"
                 />
                 Scan all active clients
               </label>
@@ -202,7 +202,7 @@ export default function TemporalPage() {
                   type="radio"
                   checked={scanMode === 'specific'}
                   onChange={() => setScanMode('specific')}
-                  className="accent-[#B87333]"
+                  className="accent-[#B8860B]"
                 />
                 Specific client
               </label>
@@ -226,7 +226,7 @@ export default function TemporalPage() {
               onClick={runScan}
               disabled={scanning || (scanMode === 'specific' && !selectedClientId)}
               className="w-full py-2.5 rounded-md text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: scanning ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+              style={{ backgroundColor: scanning ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
             >
               {scanning
                 ? `Scanning ${scanMode === 'all' ? activeClients.length + ' active clients' : 'client'} for planning opportunities...`
@@ -301,7 +301,7 @@ export default function TemporalPage() {
                             <Link
                               href={`/clients/${w.client_id}`}
                               className="text-sm font-medium hover:underline"
-                              style={{ color: '#B87333', fontFamily: "'Inter', sans-serif" }}
+                              style={{ color: '#B8860B', fontFamily: "'Inter', sans-serif" }}
                             >
                               {clientName}
                             </Link>

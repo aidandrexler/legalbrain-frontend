@@ -283,7 +283,7 @@ export default function DiagnosticsTab({ client }: Props) {
           onClick={() => setShowDropdown(!showDropdown)}
           disabled={!!runningType}
           className="flex items-center gap-2 px-4 py-2.5 rounded-md text-sm font-semibold text-white transition-colors"
-          style={{ backgroundColor: runningType ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+          style={{ backgroundColor: runningType ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
         >
           {runningType ? `Running ${getDiagnosticLabel(runningType)}...` : 'Run Diagnostic'}
           {!runningType && <ChevronDown size={16} />}
@@ -310,7 +310,7 @@ export default function DiagnosticsTab({ client }: Props) {
       {runningType && (
         <div className="bg-white rounded-lg p-6 shadow-sm" style={{ border: '1px solid #E5E1DA' }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="animate-spin w-5 h-5 rounded-full" style={{ border: '2px solid #E5E1DA', borderTopColor: '#B87333' }} />
+            <div className="animate-spin w-5 h-5 rounded-full" style={{ border: '2px solid #E5E1DA', borderTopColor: '#B8860B' }} />
             <span className="text-sm font-medium" style={{ color: '#2C2C2C', fontFamily: "'Inter', sans-serif" }}>
               {STAGES[stageIndex]}
             </span>
@@ -318,7 +318,7 @@ export default function DiagnosticsTab({ client }: Props) {
           <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#E5E1DA' }}>
             <div
               className="h-full rounded-full transition-all duration-1000"
-              style={{ width: `${((stageIndex + 1) / STAGES.length) * 100}%`, backgroundColor: '#B87333' }}
+              style={{ width: `${((stageIndex + 1) / STAGES.length) * 100}%`, backgroundColor: '#B8860B' }}
             />
           </div>
         </div>
@@ -337,7 +337,7 @@ export default function DiagnosticsTab({ client }: Props) {
             <div key={i} className="bg-white rounded-lg p-5 shadow-sm" style={{ border: '1px solid #E5E1DA' }}>
               <h3
                 className="text-lg font-semibold mb-3"
-                style={{ fontFamily: "'Playfair Display', serif", color: '#B87333' }}
+                style={{ fontFamily: "'Playfair Display', serif", color: '#B8860B' }}
               >
                 {section.heading}
               </h3>
@@ -350,7 +350,7 @@ export default function DiagnosticsTab({ client }: Props) {
               <button
                 onClick={() => setShowDraftingSpec(true)}
                 className="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                style={{ border: '1px solid #B87333', color: '#B87333', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
+                style={{ border: '1px solid #B8860B', color: '#B8860B', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
               >
                 View WealthCounsel Drafting Spec
               </button>
@@ -413,7 +413,7 @@ export default function DiagnosticsTab({ client }: Props) {
                   onClick={saveReview}
                   disabled={savingReview}
                   className="px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-                  style={{ backgroundColor: savingReview ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+                  style={{ backgroundColor: savingReview ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
                 >
                   {savingReview ? 'Saving...' : 'Save Review'}
                 </button>
@@ -459,7 +459,7 @@ export default function DiagnosticsTab({ client }: Props) {
                   <button
                     onClick={() => setActiveWithReview(d)}
                     className="text-xs px-2.5 py-1 rounded flex-shrink-0 transition-colors"
-                    style={{ border: '1px solid #B87333', color: '#B87333', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
+                    style={{ border: '1px solid #B8860B', color: '#B8860B', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
                   >
                     View
                   </button>

@@ -75,7 +75,7 @@ export default function IntegrationsCard({ tenantId, oauthTokens, onRefresh }: P
                   <button
                     onClick={() => connect(provider)}
                     className="text-xs px-3 py-1.5 rounded font-medium text-white transition-colors"
-                    style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+                    style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
                   >
                     Connect {name}
                   </button>

@@ -59,7 +59,7 @@ export default function SystemImprovements({ tenantId, improvements, onRefresh }
         {pending.length > 0 && (
           <span
             className="text-xs px-2 py-0.5 rounded-full font-semibold text-white"
-            style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+            style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
           >
             {pending.length}
           </span>
@@ -75,7 +75,7 @@ export default function SystemImprovements({ tenantId, improvements, onRefresh }
               <div className="flex items-center gap-2 mb-2">
                 <span
                   className="text-xs px-2 py-0.5 rounded font-medium"
-                  style={{ backgroundColor: 'rgba(184,115,51,0.15)', color: '#B87333', fontFamily: "'Inter', sans-serif" }}
+                  style={{ backgroundColor: 'rgba(184,115,51,0.15)', color: '#B8860B', fontFamily: "'Inter', sans-serif" }}
                 >
                   {getDiagnosticLabel(imp.diagnostic_type)}
                 </span>
@@ -97,7 +97,7 @@ export default function SystemImprovements({ tenantId, improvements, onRefresh }
                   className="px-3 py-3 rounded mb-3 text-sm italic"
                   style={{
                     backgroundColor: '#FDF9F5',
-                    borderLeft: '4px solid #B87333',
+                    borderLeft: '4px solid #B8860B',
                     color: '#2C2C2C',
                     fontFamily: "'Inter', sans-serif",
                   }}
@@ -121,7 +121,7 @@ export default function SystemImprovements({ tenantId, improvements, onRefresh }
                     onClick={() => handle(imp, 'approve', editedText)}
                     disabled={processing === imp.id}
                     className="px-3 py-1.5 rounded text-xs font-semibold text-white transition-colors"
-                    style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+                    style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
                   >
                     Save & Approve
                   </button>
@@ -129,7 +129,7 @@ export default function SystemImprovements({ tenantId, improvements, onRefresh }
                   <button
                     onClick={() => { setEditingId(imp.id); setEditedText(imp.proposed_rule); }}
                     className="px-3 py-1.5 rounded text-xs font-medium transition-colors"
-                    style={{ border: '1px solid #B87333', color: '#B87333', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
+                    style={{ border: '1px solid #B8860B', color: '#B8860B', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
                   >
                     Edit & Approve
                   </button>
@@ -184,7 +184,7 @@ export default function SystemImprovements({ tenantId, improvements, onRefresh }
                   {approved.map(imp => (
                     <tr key={imp.id} style={{ borderBottom: '1px solid #E5E1DA' }}>
                       <td className="px-4 py-3">
-                        <span className="text-xs px-2 py-0.5 rounded" style={{ backgroundColor: 'rgba(184,115,51,0.15)', color: '#B87333' }}>
+                        <span className="text-xs px-2 py-0.5 rounded" style={{ backgroundColor: 'rgba(184,115,51,0.15)', color: '#B8860B' }}>
                           {getDiagnosticLabel(imp.diagnostic_type)}
                         </span>
                       </td>

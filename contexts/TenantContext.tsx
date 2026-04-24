@@ -21,6 +21,7 @@ interface Tenant {
   openai_api_key_encrypted: string;
   govinfo_api_key: string;
   courtlistener_token: string;
+  is_platform_admin: boolean;
   sandbox_provisioned: boolean;
   created_at: string;
   updated_at: string;

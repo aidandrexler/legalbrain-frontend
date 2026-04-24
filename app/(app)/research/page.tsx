@@ -103,7 +103,7 @@ function CitationChip({ text }: { text: string }) {
   return (
     <span
       className="text-xs px-2.5 py-1 rounded-full font-medium"
-      style={{ border: '1px solid #B87333', color: '#B87333', fontFamily: "'Inter', sans-serif" }}
+      style={{ border: '1px solid #B8860B', color: '#B8860B', fontFamily: "'Inter', sans-serif" }}
     >
       {text.trim()}
     </span>
@@ -201,7 +201,7 @@ export default function ResearchPage() {
         style={{ backgroundColor: '#1B2A22', color: '#fff' }}
       >
         <div className="px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-          <h2 className="text-sm font-semibold" style={{ fontFamily: "'Playfair Display', serif", color: '#B87333' }}>History</h2>
+          <h2 className="text-sm font-semibold" style={{ fontFamily: "'Playfair Display', serif", color: '#B8860B' }}>History</h2>
         </div>
         <div className="flex-1 overflow-y-auto px-3 py-3 space-y-1">
           {history.length === 0 ? (
@@ -276,7 +276,7 @@ export default function ResearchPage() {
                 onClick={() => runSearch()}
                 disabled={searching || !question.trim()}
                 className="px-5 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-                style={{ backgroundColor: searching || !question.trim() ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+                style={{ backgroundColor: searching || !question.trim() ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
               >
                 {searching ? 'Researching...' : 'Research'}
               </button>
@@ -296,7 +296,7 @@ export default function ResearchPage() {
                   <div
                     key={i}
                     className="w-2 h-2 rounded-full animate-bounce"
-                    style={{ backgroundColor: '#B87333', animationDelay: `${i * 0.15}s` }}
+                    style={{ backgroundColor: '#B8860B', animationDelay: `${i * 0.15}s` }}
                   />
                 ))}
               </div>
@@ -313,11 +313,11 @@ export default function ResearchPage() {
                       key={i}
                       className="px-5 py-4 rounded-lg"
                       style={{
-                        borderLeft: '4px solid #B87333',
+                        borderLeft: '4px solid #B8860B',
                         backgroundColor: '#FDF9F5',
                       }}
                     >
-                      <p className="font-semibold mb-2" style={{ fontFamily: "'Playfair Display', serif", color: '#B87333', fontSize: 18 }}>
+                      <p className="font-semibold mb-2" style={{ fontFamily: "'Playfair Display', serif", color: '#B8860B', fontSize: 18 }}>
                         {section.heading}
                       </p>
                       <div style={{ fontSize: 16 }}>{renderContent(section.content)}</div>

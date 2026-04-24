@@ -288,7 +288,7 @@ export default function SettingsPage() {
                 onClick={saveRate}
                 disabled={savingRate || !rate7520}
                 className="px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-                style={{ backgroundColor: savingRate ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+                style={{ backgroundColor: savingRate ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
               >
                 {savingRate ? 'Saving...' : 'Save Rate'}
               </button>
@@ -307,7 +307,7 @@ export default function SettingsPage() {
               onClick={runDigest}
               disabled={runningDigest}
               className="px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: runningDigest ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+              style={{ backgroundColor: runningDigest ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
             >
               {runningDigest ? 'Running...' : 'Run Intelligence Digest'}
             </button>

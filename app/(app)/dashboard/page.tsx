@@ -149,7 +149,7 @@ export default function DashboardPage() {
         <button
           onClick={fetchData}
           className="px-4 py-2 rounded-md text-sm font-medium text-white"
-          style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+          style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
         >
           Retry
         </button>

@@ -25,7 +25,7 @@ function ProgressBar({ step }: { step: number }) {
             className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-all"
             style={{
               fontFamily: "'Inter', sans-serif",
-              backgroundColor: n <= step ? '#B87333' : '#E5E1DA',
+              backgroundColor: n <= step ? '#B8860B' : '#E5E1DA',
               color: n <= step ? '#fff' : '#6B6B6B',
             }}
           >
@@ -34,7 +34,7 @@ function ProgressBar({ step }: { step: number }) {
           {n < 4 && (
             <div
               className="w-12 h-0.5 mx-1"
-              style={{ backgroundColor: n < step ? '#B87333' : '#E5E1DA' }}
+              style={{ backgroundColor: n < step ? '#B8860B' : '#E5E1DA' }}
             />
           )}
         </div>
@@ -189,7 +189,7 @@ export default function OnboardingPage() {
               disabled={loading}
               className="w-full py-3 rounded-md font-semibold text-white transition-colors mb-3"
               style={{
-                backgroundColor: loading ? '#9A6425' : '#B87333',
+                backgroundColor: loading ? '#9A6425' : '#B8860B',
                 fontFamily: "'Inter', sans-serif",
               }}
             >
@@ -200,7 +200,7 @@ export default function OnboardingPage() {
               <button
                 onClick={() => setStep(2)}
                 className="text-sm underline"
-                style={{ color: '#B87333', fontFamily: "'Inter', sans-serif" }}
+                style={{ color: '#B8860B', fontFamily: "'Inter', sans-serif" }}
               >
                 Skip to setup →
               </button>
@@ -291,8 +291,8 @@ export default function OnboardingPage() {
                       onClick={() => togglePracticeArea(area)}
                       className="px-3 py-1.5 rounded-full text-sm font-medium transition-all"
                       style={{
-                        border: `1px solid ${practiceAreas.includes(area) ? '#B87333' : '#E5E1DA'}`,
-                        backgroundColor: practiceAreas.includes(area) ? '#B87333' : 'transparent',
+                        border: `1px solid ${practiceAreas.includes(area) ? '#B8860B' : '#E5E1DA'}`,
+                        backgroundColor: practiceAreas.includes(area) ? '#B8860B' : 'transparent',
                         color: practiceAreas.includes(area) ? '#fff' : '#6B6B6B',
                         fontFamily: "'Inter', sans-serif",
                       }}
@@ -309,7 +309,7 @@ export default function OnboardingPage() {
               disabled={loading}
               className="mt-6 w-full py-3 rounded-md font-semibold text-white transition-colors"
               style={{
-                backgroundColor: loading ? '#9A6425' : '#B87333',
+                backgroundColor: loading ? '#9A6425' : '#B8860B',
                 fontFamily: "'Inter', sans-serif",
               }}
             >
@@ -393,8 +393,8 @@ export default function OnboardingPage() {
                   disabled={testStatus === 'testing'}
                   className="px-4 py-2 rounded-md text-sm font-medium transition-colors"
                   style={{
-                    border: '1px solid #B87333',
-                    color: '#B87333',
+                    border: '1px solid #B8860B',
+                    color: '#B8860B',
                     backgroundColor: 'transparent',
                     fontFamily: "'Inter', sans-serif",
                   }}
@@ -419,7 +419,7 @@ export default function OnboardingPage() {
               disabled={loading}
               className="mt-6 w-full py-3 rounded-md font-semibold text-white transition-colors"
               style={{
-                backgroundColor: loading ? '#9A6425' : '#B87333',
+                backgroundColor: loading ? '#9A6425' : '#B8860B',
                 fontFamily: "'Inter', sans-serif",
               }}
             >
@@ -458,7 +458,7 @@ export default function OnboardingPage() {
                 className="rounded-lg p-5"
                 style={{ backgroundColor: '#F4F2EE', border: '1px solid #E5E1DA' }}
               >
-                <Brain size={28} style={{ color: '#B87333', margin: '0 auto 10px' }} />
+                <Brain size={28} style={{ color: '#B8860B', margin: '0 auto 10px' }} />
                 <p className="font-semibold text-sm mb-1" style={{ fontFamily: "'Playfair Display', serif", color: '#2C2C2C' }}>
                   AI Diagnostics
                 </p>
@@ -470,7 +470,7 @@ export default function OnboardingPage() {
                 className="rounded-lg p-5"
                 style={{ backgroundColor: '#F4F2EE', border: '1px solid #E5E1DA' }}
               >
-                <Search size={28} style={{ color: '#B87333', margin: '0 auto 10px' }} />
+                <Search size={28} style={{ color: '#B8860B', margin: '0 auto 10px' }} />
                 <p className="font-semibold text-sm mb-1" style={{ fontFamily: "'Playfair Display', serif", color: '#2C2C2C' }}>
                   Legal Research
                 </p>
@@ -482,7 +482,7 @@ export default function OnboardingPage() {
                 className="rounded-lg p-5"
                 style={{ backgroundColor: '#F4F2EE', border: '1px solid #E5E1DA' }}
               >
-                <Clock size={28} style={{ color: '#B87333', margin: '0 auto 10px' }} />
+                <Clock size={28} style={{ color: '#B8860B', margin: '0 auto 10px' }} />
                 <p className="font-semibold text-sm mb-1" style={{ fontFamily: "'Playfair Display', serif", color: '#2C2C2C' }}>
                   Temporal Engine
                 </p>
@@ -496,7 +496,7 @@ export default function OnboardingPage() {
               onClick={() => router.push('/dashboard')}
               className="px-8 py-3 rounded-md font-semibold text-white transition-colors"
               style={{
-                backgroundColor: '#B87333',
+                backgroundColor: '#B8860B',
                 fontFamily: "'Inter', sans-serif",
               }}
             >

@@ -56,7 +56,7 @@ export default function SignupPage() {
         <div className="text-center mb-8">
           <span
             className="text-3xl font-bold block mb-2"
-            style={{ fontFamily: "'Playfair Display', serif", color: '#B87333' }}
+            style={{ fontFamily: "'Playfair Display', serif", color: '#B8860B' }}
           >
             LegalBrain AI
           </span>
@@ -80,7 +80,7 @@ export default function SignupPage() {
               required
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full px-3 py-2.5 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B87333] focus:border-transparent bg-white text-[#2C2C2C] placeholder:text-gray-400"
+              className="w-full px-3 py-2.5 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8860B] focus:border-transparent bg-white text-[#2C2C2C] placeholder:text-gray-400"
               placeholder="attorney@yourfirm.com"
             />
           </div>
@@ -97,7 +97,7 @@ export default function SignupPage() {
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full px-3 py-2.5 pr-10 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B87333] focus:border-transparent bg-white text-[#2C2C2C]"
+                className="w-full px-3 py-2.5 pr-10 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8860B] focus:border-transparent bg-white text-[#2C2C2C]"
                 placeholder="Min. 8 characters"
               />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -118,7 +118,7 @@ export default function SignupPage() {
                 required
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
-                className="w-full px-3 py-2.5 pr-10 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B87333] focus:border-transparent bg-white text-[#2C2C2C]"
+                className="w-full px-3 py-2.5 pr-10 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8860B] focus:border-transparent bg-white text-[#2C2C2C]"
                 placeholder="Re-enter password"
               />
               <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -137,7 +137,7 @@ export default function SignupPage() {
             type="submit"
             disabled={loading}
             className="w-full py-2.5 rounded-lg text-sm font-semibold text-white transition-colors disabled:opacity-60"
-            style={{ backgroundColor: loading ? '#9A6425' : '#B87333' }}
+            style={{ backgroundColor: loading ? '#9A6425' : '#B8860B' }}
           >
             {loading ? 'Creating account...' : 'Create Account'}
           </button>
@@ -145,7 +145,7 @@ export default function SignupPage() {
 
         <p className="text-center text-sm text-[#6B6B6B] mt-6">
           Already have an account?{' '}
-          <Link href="/login" className="font-medium hover:underline" style={{ color: '#B87333' }}>
+          <Link href="/login" className="font-medium hover:underline" style={{ color: '#B8860B' }}>
             Sign in
           </Link>
         </p>

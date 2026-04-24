@@ -75,7 +75,7 @@ export default function ClientsPage() {
         <button
           onClick={fetchClients}
           className="px-4 py-2 rounded-md text-sm font-medium text-white"
-          style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+          style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
         >
           Retry
         </button>
@@ -107,7 +107,7 @@ export default function ClientsPage() {
           <button
             onClick={() => setShowSlideOver(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-            style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+            style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
           >
             <Plus size={16} />
             New Client
@@ -124,7 +124,7 @@ export default function ClientsPage() {
             <button
               onClick={() => setShowSlideOver(true)}
               className="px-5 py-2.5 rounded-md text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+              style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
             >
               New Client
             </button>
@@ -160,7 +160,7 @@ export default function ClientsPage() {
                         <Link
                           href={`/clients/${c.id}`}
                           className="font-medium hover:underline"
-                          style={{ color: '#B87333', fontFamily: "'Inter', sans-serif" }}
+                          style={{ color: '#B8860B', fontFamily: "'Inter', sans-serif" }}
                         >
                           {c.first_name} {c.last_name}
                         </Link>
@@ -182,7 +182,7 @@ export default function ClientsPage() {
                         <Link
                           href={`/clients/${c.id}`}
                           className="px-3 py-1.5 rounded text-xs font-medium transition-colors"
-                          style={{ border: '1px solid #B87333', color: '#B87333', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
+                          style={{ border: '1px solid #B8860B', color: '#B8860B', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
                         >
                           View
                         </Link>

@@ -23,7 +23,7 @@ function Toggle({ value, onChange, label }: { value: boolean; onChange: (v: bool
         type="button"
         onClick={() => onChange(!value)}
         className="relative inline-flex h-5 w-9 items-center rounded-full transition-colors"
-        style={{ backgroundColor: value ? '#B87333' : '#E5E1DA' }}
+        style={{ backgroundColor: value ? '#B8860B' : '#E5E1DA' }}
       >
         <span
           className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
@@ -311,12 +311,12 @@ export default function NewClientSlideOver({ tenantId, onClose, onSaved }: Props
             <div key={label}>
               <div className="flex justify-between mb-1">
                 <span className="text-sm" style={{ color: '#2C2C2C' }}>{label}</span>
-                <span className="text-sm font-medium" style={{ color: '#B87333' }}>{value}%</span>
+                <span className="text-sm font-medium" style={{ color: '#B8860B' }}>{value}%</span>
               </div>
               <input
                 type="range" min={0} max={100} value={value}
                 onChange={e => set(Number(e.target.value))}
-                className="w-full accent-[#B87333]"
+                className="w-full accent-[#B8860B]"
               />
             </div>
           ))}
@@ -363,14 +363,14 @@ export default function NewClientSlideOver({ tenantId, onClose, onSaved }: Props
             <button
               type="button"
               className="flex-1 py-2 rounded-md text-sm font-medium transition-colors"
-              style={{ border: '1px solid #B87333', color: '#B87333', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
+              style={{ border: '1px solid #B8860B', color: '#B8860B', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
             >
               Import from Clio
             </button>
             <button
               type="button"
               className="flex-1 py-2 rounded-md text-sm font-medium transition-colors"
-              style={{ border: '1px solid #B87333', color: '#B87333', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
+              style={{ border: '1px solid #B8860B', color: '#B8860B', backgroundColor: 'transparent', fontFamily: "'Inter', sans-serif" }}
             >
               Import from LEAP
             </button>
@@ -380,7 +380,7 @@ export default function NewClientSlideOver({ tenantId, onClose, onSaved }: Props
             onClick={handleSave}
             disabled={saving}
             className="w-full py-2.5 rounded-md text-sm font-semibold text-white transition-colors"
-            style={{ backgroundColor: saving ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+            style={{ backgroundColor: saving ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
           >
             {saving ? 'Saving...' : 'Save Client'}
           </button>

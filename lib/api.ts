@@ -82,4 +82,56 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tenant_id })
     }).then(r => r.json()),
+
+  // Estate canvas
+  getEstateNodes: (client_id: string, tenant_id: string) =>
+    fetch(`${API}/api/v1/estate/nodes/${client_id}?tenant_id=${tenant_id}`)
+      .then(r => r.json()),
+
+  saveEstateNode: (data: object) =>
+    fetch(`${API}/api/v1/estate/nodes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(r => r.json()),
+
+  updateNodeRisk: (node_id: string, risk_level: string, tenant_id: string) =>
+    fetch(`${API}/api/v1/estate/nodes/${node_id}/risk`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ risk_level, tenant_id })
+    }).then(r => r.json()),
+
+  getPreBrief: (client_id: string, tenant_id: string) =>
+    fetch(`${API}/api/v1/pre-brief/${client_id}?tenant_id=${tenant_id}`)
+      .then(r => r.json()),
+
+  buildDiagnostic: (data: object) =>
+    fetch(`${API}/api/v1/build-diagnostic`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(r => r.json()),
+
+  getPlatformDiagnostics: () =>
+    fetch(`${API}/api/v1/platform-diagnostics`).then(r => r.json()),
+
+  getGlobalChunks: (admin_key: string) =>
+    fetch(`${API}/api/v1/admin/global-chunks`, {
+      headers: { 'admin-key': admin_key }
+    }).then(r => r.json()),
+
+  seedGlobal: (data: object, admin_key: string) =>
+    fetch(`${API}/api/v1/admin/seed-global`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'admin-key': admin_key },
+      body: JSON.stringify(data)
+    }).then(r => r.json()),
+
+  promoteExtraction: (extraction_job_id: string, admin_key: string) =>
+    fetch(`${API}/api/v1/admin/promote-extraction`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'admin-key': admin_key },
+      body: JSON.stringify({ extraction_job_id })
+    }).then(r => r.json()),
 };

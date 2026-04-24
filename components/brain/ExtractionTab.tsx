@@ -183,9 +183,9 @@ export default function ExtractionTab({ tenantId }: Props) {
             onClick={() => setInputMode(mode)}
             className="px-4 py-1.5 rounded-md text-sm font-medium transition-all capitalize"
             style={{
-              backgroundColor: inputMode === mode ? '#B87333' : 'transparent',
+              backgroundColor: inputMode === mode ? '#B8860B' : 'transparent',
               color: inputMode === mode ? '#fff' : '#6B6B6B',
-              border: `1px solid ${inputMode === mode ? '#B87333' : '#E5E1DA'}`,
+              border: `1px solid ${inputMode === mode ? '#B8860B' : '#E5E1DA'}`,
               fontFamily: "'Inter', sans-serif",
             }}
           >
@@ -227,7 +227,7 @@ export default function ExtractionTab({ tenantId }: Props) {
       {running && (
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <div className="animate-spin w-4 h-4 rounded-full" style={{ border: '2px solid #E5E1DA', borderTopColor: '#B87333' }} />
+            <div className="animate-spin w-4 h-4 rounded-full" style={{ border: '2px solid #E5E1DA', borderTopColor: '#B8860B' }} />
             <span className="text-sm" style={{ color: '#2C2C2C', fontFamily: "'Inter', sans-serif" }}>
               {jobCurrentStep || 'Processing...'}
             </span>
@@ -235,7 +235,7 @@ export default function ExtractionTab({ tenantId }: Props) {
           <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#E5E1DA' }}>
             <div
               className="h-full rounded-full transition-all duration-500"
-              style={{ width: `${jobProgress}%`, backgroundColor: '#B87333' }}
+              style={{ width: `${jobProgress}%`, backgroundColor: '#B8860B' }}
             />
           </div>
           {jobChunks > 0 && (
@@ -248,7 +248,7 @@ export default function ExtractionTab({ tenantId }: Props) {
         onClick={startExtraction}
         disabled={running}
         className="px-5 py-2.5 rounded-md text-sm font-semibold text-white transition-colors"
-        style={{ backgroundColor: running ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+        style={{ backgroundColor: running ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
       >
         {running ? 'Extracting...' : 'Begin Extraction'}
       </button>

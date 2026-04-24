@@ -1,29 +1,30 @@
+@import '@xyflow/react/dist/style.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --sidebar-bg: #1B2A22;
-  --copper: #B87333;
+  --sidebar-bg: #0F1923;
+  --copper: #B8860B;
   --copper-hover: #9A6425;
-  --page-bg: #F4F2EE;
+  --page-bg: #F7F5F0;
   --card: #FFFFFF;
-  --text: #2C2C2C;
-  --text-secondary: #6B6B6B;
-  --border: #E5E1DA;
+  --text: #0F1923;
+  --text-secondary: #64748B;
+  --border: #E2E8F0;
   --success: #3A6B4B;
   --error: #C0392B;
   --warning: #C9A84C;
 }
 
 body {
-  background-color: #F4F2EE;
-  color: #2C2C2C;
+  background-color: #F7F5F0;
+  color: #0F1923;
   font-family: 'Inter', sans-serif;
 }
 
 h1, h2, h3, .font-display {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 @layer base {

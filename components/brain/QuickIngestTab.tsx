@@ -116,7 +116,7 @@ export default function QuickIngestTab({ tenantId }: Props) {
         onClick={handleIngest}
         disabled={ingesting}
         className="px-5 py-2.5 rounded-md text-sm font-semibold text-white transition-colors"
-        style={{ backgroundColor: ingesting ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+        style={{ backgroundColor: ingesting ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
       >
         {ingesting ? 'Ingesting...' : 'Ingest'}
       </button>

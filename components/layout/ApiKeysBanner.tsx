@@ -24,7 +24,7 @@ export default function ApiKeysBanner() {
       <Link
         href="/settings"
         className="font-medium hover:underline transition-colors"
-        style={{ color: '#B87333' }}
+        style={{ color: '#B8860B' }}
       >
         Go to Settings
       </Link>

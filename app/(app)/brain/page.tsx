@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
+import Link from 'next/link';
 import { useTenant } from '@/contexts/TenantContext';
 import { createClient } from '@/lib/supabase/client';
 import { formatDate } from '@/lib/utils';
@@ -126,11 +127,20 @@ export default function BrainPage() {
         >
           Knowledge Base
         </h1>
-        {lastIngestion && (
-          <p className="text-sm" style={{ color: '#6B6B6B' }}>
-            Last ingestion: {formatDate(lastIngestion)}
-          </p>
-        )}
+        <div className="text-right">
+          {lastIngestion && (
+            <p className="text-sm" style={{ color: '#6B6B6B' }}>
+              Last ingestion: {formatDate(lastIngestion)}
+            </p>
+          )}
+          <Link
+            href="/brain/custom-diagnostic"
+            className="inline-block mt-2 rounded-md px-3 py-2 text-sm text-white"
+            style={{ backgroundColor: '#B8860B' }}
+          >
+            Build Custom Diagnostic
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-4 gap-4 mb-6">
@@ -160,8 +170,8 @@ export default function BrainPage() {
               onClick={() => setActiveAddTab(key)}
               className="px-4 py-2.5 text-sm font-medium transition-all"
               style={{
-                color: activeAddTab === key ? '#B87333' : '#6B6B6B',
-                borderBottom: activeAddTab === key ? '2px solid #B87333' : '2px solid transparent',
+                color: activeAddTab === key ? '#B8860B' : '#6B6B6B',
+                borderBottom: activeAddTab === key ? '2px solid #B8860B' : '2px solid transparent',
                 fontFamily: "'Inter', sans-serif",
                 marginBottom: -1,
                 backgroundColor: 'transparent',
@@ -215,7 +225,7 @@ export default function BrainPage() {
                       <td className="px-4 py-3">
                         <span
                           className="text-xs px-2 py-0.5 rounded font-medium"
-                          style={{ backgroundColor: 'rgba(184,115,51,0.15)', color: '#B87333' }}
+                          style={{ backgroundColor: 'rgba(184,115,51,0.15)', color: '#B8860B' }}
                         >
                           {NAMESPACE_LABELS[entry.namespace] ?? entry.namespace}
                         </span>

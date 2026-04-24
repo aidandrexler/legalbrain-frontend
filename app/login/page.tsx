@@ -46,7 +46,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <span
             className="text-3xl font-bold block mb-2"
-            style={{ fontFamily: "'Playfair Display', serif", color: '#B87333' }}
+            style={{ fontFamily: "'Playfair Display', serif", color: '#B8860B' }}
           >
             LegalBrain AI
           </span>
@@ -73,7 +73,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full px-3 py-2.5 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B87333] focus:border-transparent bg-white text-[#2C2C2C] placeholder:text-gray-400"
+              className="w-full px-3 py-2.5 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8860B] focus:border-transparent bg-white text-[#2C2C2C] placeholder:text-gray-400"
               placeholder="attorney@yourfirm.com"
             />
           </div>
@@ -93,7 +93,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full px-3 py-2.5 pr-10 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B87333] focus:border-transparent bg-white text-[#2C2C2C]"
+                className="w-full px-3 py-2.5 pr-10 border border-[#E5E1DA] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B8860B] focus:border-transparent bg-white text-[#2C2C2C]"
                 placeholder="••••••••"
               />
               <button

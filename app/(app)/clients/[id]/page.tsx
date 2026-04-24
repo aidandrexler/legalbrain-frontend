@@ -1,14 +1,16 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Plus, ScanSearch } from 'lucide-react';
 import { useTenant } from '@/contexts/TenantContext';
 import { createClient } from '@/lib/supabase/client';
 import { formatCurrency, STATUS_COLORS } from '@/lib/utils';
 import ProfileTab from '@/components/clients/detail/ProfileTab';
 import DiagnosticsTab from '@/components/clients/detail/DiagnosticsTab';
+import EstateCanvas from '@/components/canvas/EstateCanvas';
+import CouncilBriefingPanel from '@/components/canvas/CouncilBriefingPanel';
+import { api } from '@/lib/api';
 
 interface Client {
   id: string;
@@ -55,15 +57,24 @@ interface Client {
   updated_at: string;
 }
 
+interface ActionItem {
+  id: string;
+  title: string;
+  description: string;
+  urgency: string;
+  status: string;
+}
+
 export default function ClientDetailPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
   const { tenant_id, loading: tenantLoading } = useTenant();
   const supabase = createClient();
 
   const [client, setClient] = useState<Client | null>(null);
+  const [actionItems, setActionItems] = useState<ActionItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const [activeTab, setActiveTab] = useState<'profile' | 'diagnostics'>('profile');
+  const [activeTab, setActiveTab] = useState<'diagnostics' | 'forge_actions' | 'documents' | 'profile'>('diagnostics');
+  const [selectedNode, setSelectedNode] = useState<any>(null);
 
   const fetchClient = useCallback(async () => {
     if (!tenant_id) return;
@@ -83,27 +94,38 @@ export default function ClientDetailPage({ params }: { params: { id: string } })
     setLoading(false);
   }, [tenant_id, params.id, supabase]);
 
+  const fetchActionItems = useCallback(async () => {
+    if (!tenant_id) return;
+    const { data } = await supabase
+      .from('action_items')
+      .select('id, title, description, urgency, status')
+      .eq('tenant_id', tenant_id)
+      .eq('client_id', params.id)
+      .order('created_at', { ascending: false });
+    setActionItems((data as ActionItem[]) ?? []);
+  }, [params.id, supabase, tenant_id]);
+
   useEffect(() => {
-    if (!tenantLoading && tenant_id) fetchClient();
-  }, [tenant_id, tenantLoading, fetchClient]);
+    if (!tenantLoading && tenant_id) {
+      void fetchClient();
+      void fetchActionItems();
+    }
+  }, [tenant_id, tenantLoading, fetchActionItems, fetchClient]);
 
   if (tenantLoading || loading) {
     return (
-      <div className="px-8 py-8">
-        <div className="h-8 w-48 rounded mb-4 animate-pulse" style={{ backgroundColor: '#E5E1DA' }} />
-        <p className="text-sm" style={{ color: '#6B6B6B', fontFamily: "'Inter', sans-serif" }}>Loading client...</p>
-      </div>
+      <div className="h-[80vh] m-6 animate-pulse rounded-xl" style={{ backgroundColor: '#E2E8F0' }} />
     );
   }
 
   if (notFound || !client) {
     return (
       <div className="px-8 py-8">
-        <p className="text-base mb-4" style={{ color: '#2C2C2C', fontFamily: "'Inter', sans-serif" }}>Client not found.</p>
+        <p className="text-base mb-4" style={{ color: '#0F1923', fontFamily: "'Inter', sans-serif" }}>Client not found.</p>
         <Link
           href="/clients"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white"
-          style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+          style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
         >
           <ArrowLeft size={16} /> Back to Clients
         </Link>
@@ -111,86 +133,131 @@ export default function ClientDetailPage({ params }: { params: { id: string } })
     );
   }
 
-  return (
-    <div className="px-8 py-8" style={{ fontFamily: "'Inter', sans-serif" }}>
-      <Link
-        href="/clients"
-        className="inline-flex items-center gap-1 text-sm mb-5"
-        style={{ color: '#6B6B6B', fontFamily: "'Inter', sans-serif" }}
-      >
-        <ArrowLeft size={14} /> Back to Clients
-      </Link>
+  const runRiskArchitecture = async () => {
+    if (!tenant_id || !client) return;
+    await api.runDiagnostic({
+      tenant_id,
+      client_id: client.id,
+      diagnostic_type: 'risk_architecture',
+      include_badge_check: true,
+    });
+    setActiveTab('diagnostics');
+  };
 
-      <div className="flex items-start justify-between mb-2">
-        <div>
+  return (
+    <div className="h-screen flex flex-col" style={{ backgroundColor: '#F7F5F0', fontFamily: "'Inter', sans-serif" }}>
+      <div className="px-6 py-4 border-b flex items-center justify-between" style={{ borderColor: '#E2E8F0' }}>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/clients"
+            className="inline-flex items-center gap-1 text-sm"
+            style={{ color: '#64748B' }}
+          >
+            <ArrowLeft size={14} /> Back
+          </Link>
           <h1
-            className="font-bold leading-tight"
-            style={{ fontFamily: "'Playfair Display', serif", color: '#2C2C2C', fontSize: 28 }}
+            className="font-semibold leading-tight"
+            style={{ fontFamily: "'Cormorant Garamond', serif", color: '#0F1923', fontSize: 38 }}
           >
             {client.first_name} {client.last_name}
           </h1>
-          <div className="flex items-center gap-3 mt-2 flex-wrap">
-            <span
-              className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[client.client_status] ?? 'bg-gray-100 text-gray-700'}`}
-            >
-              {client.client_status.replace(/_/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase())}
-            </span>
-            {client.estate_size_estimate> 0 && (
-              <span className="text-sm" style={{ color: '#6B6B6B' }}>
-                {formatCurrency(client.estate_size_estimate)}
-              </span>
-            )}
-            {client.is_physician && (
-              <span
-                className="text-xs px-2 py-0.5 rounded font-medium"
-                style={{ backgroundColor: '#EFF6FF', color: '#1E40AF' }}
+        </div>
+        <div className="flex items-center gap-2">
+          <span
+            className={`text-xs px-2 py-0.5 rounded font-medium ${STATUS_COLORS[client.client_status] ?? 'bg-gray-100 text-gray-700'}`}
+          >
+            {client.client_status.replace(/_/g, ' ').replace(/\b\w/g, (ch) => ch.toUpperCase())}
+          </span>
+          <span className="text-sm" style={{ color: '#64748B' }}>
+            {formatCurrency(client.estate_size_estimate || 0)}
+          </span>
+          <button
+            onClick={runRiskArchitecture}
+            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white"
+            style={{ backgroundColor: '#B8860B' }}
+          >
+            <ScanSearch size={16} /> Analyze Structure
+          </button>
+          <button
+            onClick={() => setActiveTab('diagnostics')}
+            className="rounded-md px-3 py-2 text-sm font-medium text-white"
+            style={{ backgroundColor: '#B8860B' }}
+          >
+            View All Diagnostics
+          </button>
+          <button
+            onClick={() => setSelectedNode(null)}
+            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white"
+            style={{ backgroundColor: '#B8860B' }}
+          >
+            <Plus size={16} /> Add to Structure
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 min-h-0 px-6 py-4">
+        <div className="h-[56vh] min-h-[420px] flex overflow-hidden rounded-xl border" style={{ borderColor: '#E2E8F0' }}>
+          <div className="flex-1 min-w-0">
+            <EstateCanvas client={client} tenant_id={tenant_id!} onNodeSelect={setSelectedNode} />
+          </div>
+          <CouncilBriefingPanel client={client} tenant_id={tenant_id!} selectedNode={selectedNode} />
+        </div>
+
+        <div className="mt-4 h-[calc(100%-56vh-1rem)] min-h-[240px] overflow-hidden rounded-xl border bg-white" style={{ borderColor: '#E2E8F0' }}>
+          <div className="flex gap-1 px-4 pt-3" style={{ borderBottom: '1px solid #E2E8F0' }}>
+            {(['diagnostics', 'forge_actions', 'documents', 'profile'] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className="px-4 py-2.5 text-sm font-medium transition-all"
+                style={{
+                  color: activeTab === tab ? '#B8860B' : '#64748B',
+                  borderBottom: activeTab === tab ? '2px solid #B8860B' : '2px solid transparent',
+                  marginBottom: -1,
+                  textTransform: 'none',
+                }}
               >
-                Physician
-              </span>
+                {tab === 'forge_actions'
+                  ? 'Forge Actions'
+                  : tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div className="p-4 h-[calc(100%-56px)] overflow-y-auto">
+            {activeTab === 'diagnostics' && (
+              <DiagnosticsTab client={{ ...client, tenant_id: tenant_id! }} />
             )}
-            {client.entity_type && (
-              <span
-                className="text-xs px-2 py-0.5 rounded font-medium"
-                style={{ backgroundColor: '#F4F2EE', color: '#6B6B6B', border: '1px solid #E5E1DA' }}
-              >
-                {client.entity_type}
-              </span>
+            {activeTab === 'forge_actions' && (
+              <div className="space-y-2">
+                {actionItems.length === 0 ? (
+                  <p className="text-sm" style={{ color: '#64748B' }}>No Forge actions yet.</p>
+                ) : (
+                  actionItems.map((item) => (
+                    <div key={item.id} className="rounded-md border px-3 py-2" style={{ borderColor: '#E2E8F0' }}>
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-semibold" style={{ color: '#0F1923' }}>{item.title}</p>
+                        <span className="text-xs rounded-full px-2 py-0.5" style={{ backgroundColor: '#F1F5F9', color: '#475569' }}>
+                          {item.urgency}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-sm" style={{ color: '#475569' }}>{item.description}</p>
+                    </div>
+                  ))
+                )}
+              </div>
             )}
-            {client.marital_status && (
-              <span className="text-sm capitalize" style={{ color: '#6B6B6B' }}>
-                {client.marital_status}
-              </span>
+            {activeTab === 'documents' && (
+              <p className="text-sm" style={{ color: '#64748B' }}>
+                Document intelligence coming soon
+              </p>
+            )}
+            {activeTab === 'profile' && (
+              <ProfileTab client={{ ...client, tenant_id: tenant_id! }} onUpdated={fetchClient} />
             )}
           </div>
         </div>
       </div>
-
-      <div className="flex gap-1 mb-6 mt-4" style={{ borderBottom: '1px solid #E5E1DA' }}>
-        {(['profile', 'diagnostics'] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className="px-4 py-2.5 text-sm font-medium transition-all capitalize"
-            style={{
-              color: activeTab === tab ? '#B87333' : '#6B6B6B',
-              borderBottom: activeTab === tab ? '2px solid #B87333' : '2px solid transparent',
-              fontFamily: "'Inter', sans-serif",
-              marginBottom: -1,
-              backgroundColor: 'transparent',
-            }}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      {activeTab === 'profile' && (
-        <ProfileTab client={client} onUpdated={fetchClient} />
-      )}
-
-      {activeTab === 'diagnostics' && (
-        <DiagnosticsTab client={client} />
-      )}
     </div>
   );
 }

@@ -11,6 +11,7 @@ import { api } from '@/lib/api';
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { label: 'Clients', href: '/clients', icon: Users },
+  { label: 'Structure Canvas', href: '/clients', icon: Users },
   { label: 'Brain', href: '/brain', icon: Brain },
   { label: 'Research', href: '/research', icon: Search },
   { label: 'Temporal', href: '/temporal', icon: Clock },
@@ -53,31 +54,19 @@ export default function Sidebar() {
   return (
     <aside
       className="fixed top-0 left-0 h-full w-60 flex flex-col z-40"
-      style={{ backgroundColor: '#1B2A22' }}
+      style={{ backgroundColor: '#0F1923' }}
     >
       <div className="px-6 py-6 border-b border-white/10">
         <Link href="/dashboard" className="block">
           <span
             className="text-xl leading-tight block"
             style={{
-              fontFamily: "'Playfair Display', serif",
-              color: '#B87333',
+              fontFamily: "'Cormorant Garamond', serif",
+              color: '#B8860B',
               fontWeight: 700,
             }}
           >
-            LegalBrain{' '}
-            <sup
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: '10px',
-                fontWeight: 600,
-                letterSpacing: '0.05em',
-                color: '#B87333',
-                verticalAlign: 'super',
-              }}
-            >
-              AI
-            </sup>
+            Forge
           </span>
         </Link>
       </div>
@@ -98,7 +87,7 @@ export default function Sidebar() {
               style={
                 isActive
                   ? {
-                      borderLeft: '3px solid #B87333',
+                      borderLeft: '3px solid #B8860B',
                       paddingLeft: '9px',
                     }
                   : { borderLeft: '3px solid transparent', paddingLeft: '9px' }
@@ -106,13 +95,33 @@ export default function Sidebar() {
             >
               <Icon
                 size={18}
-                style={{ color: isActive ? '#B87333' : 'inherit' }}
+                style={{ color: isActive ? '#B8860B' : 'inherit' }}
               />
               <span style={{ fontFamily: "'Inter', sans-serif" }}>{label}</span>
             </Link>
           );
         })}
       </nav>
+
+      {tenant?.is_platform_admin && (
+        <div className="px-3 pb-3">
+          <Link
+            href="/admin"
+            className={cn(
+              'flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-all relative',
+              pathname === '/admin' ? 'text-white bg-white/10' : 'text-white/60 hover:text-white hover:bg-white/5'
+            )}
+            style={
+              pathname === '/admin'
+                ? { borderLeft: '3px solid #B8860B', paddingLeft: '9px' }
+                : { borderLeft: '3px solid transparent', paddingLeft: '9px' }
+            }
+          >
+            <Settings size={18} style={{ color: pathname === '/admin' ? '#B8860B' : 'inherit' }} />
+            <span style={{ fontFamily: "'Inter', sans-serif" }}>Admin</span>
+          </Link>
+        </div>
+      )}
 
       <div className="px-5 py-4 border-t border-white/10">
         <div className="flex items-center gap-2 mb-1">

@@ -101,7 +101,7 @@ function ApiKeyRow({
               onClick={handleSave}
               disabled={saving || !value.trim()}
               className="text-xs px-3 py-1.5 rounded font-medium text-white"
-              style={{ backgroundColor: '#B87333', fontFamily: "'Inter', sans-serif" }}
+              style={{ backgroundColor: '#B8860B', fontFamily: "'Inter', sans-serif" }}
             >
               {saving ? '...' : 'Save'}
             </button>
@@ -202,7 +202,7 @@ export default function ApiConfigCard({ tenant, onSaved }: Props) {
                   onClick={saveGovInfo}
                   disabled={savingGov}
                   className="px-3 py-2 rounded-md text-sm font-medium text-white flex-shrink-0"
-                  style={{ backgroundColor: '#B87333' }}
+                  style={{ backgroundColor: '#B8860B' }}
                 >
                   {savingGov ? '...' : 'Save'}
                 </button>
@@ -216,7 +216,7 @@ export default function ApiConfigCard({ tenant, onSaved }: Props) {
                   onClick={saveCourtListener}
                   disabled={savingCourt}
                   className="px-3 py-2 rounded-md text-sm font-medium text-white flex-shrink-0"
-                  style={{ backgroundColor: '#B87333' }}
+                  style={{ backgroundColor: '#B8860B' }}
                 >
                   {savingCourt ? '...' : 'Save'}
                 </button>
@@ -231,7 +231,7 @@ export default function ApiConfigCard({ tenant, onSaved }: Props) {
           onClick={testAll}
           disabled={testing}
           className="px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-          style={{ backgroundColor: testing ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+          style={{ backgroundColor: testing ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
         >
           {testing ? 'Testing...' : 'Test All Connections'}
         </button>

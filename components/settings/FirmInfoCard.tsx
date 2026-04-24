@@ -110,8 +110,8 @@ export default function FirmInfoCard({ tenant, onSaved }: Props) {
               onClick={() => toggleArea(area)}
               className="px-3 py-1.5 rounded-full text-sm font-medium transition-all"
               style={{
-                border: `1px solid ${practiceAreas.includes(area) ? '#B87333' : '#E5E1DA'}`,
-                backgroundColor: practiceAreas.includes(area) ? '#B87333' : 'transparent',
+                border: `1px solid ${practiceAreas.includes(area) ? '#B8860B' : '#E5E1DA'}`,
+                backgroundColor: practiceAreas.includes(area) ? '#B8860B' : 'transparent',
                 color: practiceAreas.includes(area) ? '#fff' : '#6B6B6B',
                 fontFamily: "'Inter', sans-serif",
               }}
@@ -127,7 +127,7 @@ export default function FirmInfoCard({ tenant, onSaved }: Props) {
           onClick={handleSave}
           disabled={saving}
           className="px-4 py-2 rounded-md text-sm font-semibold text-white transition-colors"
-          style={{ backgroundColor: saving ? '#9A6425' : '#B87333', fontFamily: "'Inter', sans-serif" }}
+          style={{ backgroundColor: saving ? '#9A6425' : '#B8860B', fontFamily: "'Inter', sans-serif" }}
         >
           {saving ? 'Saving...' : 'Save Changes'}
         </button>
