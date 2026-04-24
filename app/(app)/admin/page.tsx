@@ -31,6 +31,7 @@ export default function AdminPage() {
   const supabase = createClient();
   const { tenant, loading } = useTenant();
   const [adminKey, setAdminKey] = useState('');
+  const [adminUnlocked, setAdminUnlocked] = useState(false);
   const [globalChunks, setGlobalChunks] = useState<GlobalChunk[]>([]);
   const [diagnostics, setDiagnostics] = useState<PlatformDiagnostic[]>([]);
   const [tenants, setTenants] = useState<TenantRow[]>([]);
@@ -54,15 +55,17 @@ export default function AdminPage() {
 
   useEffect(() => {
     const savedKey = sessionStorage.getItem('forge_admin_key');
-    if (savedKey) setAdminKey(savedKey);
+    if (savedKey) {
+      setAdminKey(savedKey);
+      setAdminUnlocked(true);
+    }
   }, []);
 
   useEffect(() => {
-    if (!tenant?.is_platform_admin || !adminKey) return;
-    sessionStorage.setItem('forge_admin_key', adminKey);
+    if (!tenant?.is_platform_admin) return;
 
     const load = async () => {
-      const chunkResponse = await api.getGlobalChunks(adminKey);
+      const chunkResponse = adminKey ? await api.getGlobalChunks(adminKey) : { chunks: [] };
       setGlobalChunks((chunkResponse?.chunks ?? []) as GlobalChunk[]);
 
       const diagResponse = await api.getPlatformDiagnostics();
@@ -104,13 +107,31 @@ export default function AdminPage() {
       <main className="flex-1 p-6 space-y-6">
         <div>
           <label className="block text-sm mb-1" style={{ color: '#475569' }}>Admin Key</label>
-          <input
-            value={adminKey}
-            onChange={(e) => setAdminKey(e.target.value)}
-            className="w-full max-w-xl rounded-md px-3 py-2"
-            style={{ border: '1px solid #E2E8F0' }}
-            placeholder="Enter platform admin key"
-          />
+          <div className="flex items-center gap-2 max-w-xl">
+            <input
+              type="password"
+              value={adminKey}
+              onChange={(e) => {
+                setAdminKey(e.target.value);
+                if (!e.target.value) setAdminUnlocked(false);
+              }}
+              className="w-full rounded-md px-3 py-2"
+              style={{ border: '1px solid #E2E8F0' }}
+              placeholder="Enter admin key"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                if (!adminKey) return;
+                sessionStorage.setItem('forge_admin_key', adminKey);
+                setAdminUnlocked(true);
+              }}
+              className="rounded-md px-3 py-2 text-sm text-white"
+              style={{ backgroundColor: '#B8860B' }}
+            >
+              Unlock
+            </button>
+          </div>
         </div>
 
         <section id="global-brain" className="rounded-xl border bg-white p-5" style={{ borderColor: '#E2E8F0' }}>
@@ -122,66 +143,70 @@ export default function AdminPage() {
             ))}
           </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <h3 className="font-semibold" style={{ color: '#0F1923' }}>Seed Global Brain</h3>
-              <textarea
-                value={seedForm.content}
-                onChange={(e) => setSeedForm((s) => ({ ...s, content: e.target.value }))}
-                className="w-full rounded-md p-2 text-sm"
-                rows={6}
-                style={{ border: '1px solid #E2E8F0' }}
-              />
-              <select
-                value={seedForm.namespace}
-                onChange={(e) => setSeedForm((s) => ({ ...s, namespace: e.target.value }))}
-                className="w-full rounded-md p-2 text-sm"
-                style={{ border: '1px solid #E2E8F0' }}
-              >
-                {['primary_law', 'secondary_law', 'case_law', 'irs_guidance', 'practitioner_patterns'].map((namespace) => (
-                  <option key={namespace} value={namespace}>{namespace}</option>
-                ))}
-              </select>
-              <select
-                value={seedForm.confidence_tier}
-                onChange={(e) => setSeedForm((s) => ({ ...s, confidence_tier: Number(e.target.value) }))}
-                className="w-full rounded-md p-2 text-sm"
-                style={{ border: '1px solid #E2E8F0' }}
-              >
-                {[1, 2, 3, 4].map((tier) => <option key={tier} value={tier}>Confidence Tier {tier}</option>)}
-              </select>
-              <input value={seedForm.source_id} onChange={(e) => setSeedForm((s) => ({ ...s, source_id: e.target.value }))} className="w-full rounded-md px-3 py-2 text-sm" style={{ border: '1px solid #E2E8F0' }} placeholder="Source ID" />
-              <input value={seedForm.description} onChange={(e) => setSeedForm((s) => ({ ...s, description: e.target.value }))} className="w-full rounded-md px-3 py-2 text-sm" style={{ border: '1px solid #E2E8F0' }} placeholder="Description" />
-              <input value={seedForm.citation} onChange={(e) => setSeedForm((s) => ({ ...s, citation: e.target.value }))} className="w-full rounded-md px-3 py-2 text-sm" style={{ border: '1px solid #E2E8F0' }} placeholder="Citation" />
-              <button
-                type="button"
-                onClick={() => api.seedGlobal(seedForm, adminKey)}
-                className="rounded-md px-3 py-2 text-sm text-white"
-                style={{ backgroundColor: '#B8860B' }}
-              >
-                Seed to Global Brain
-              </button>
-            </div>
+          {adminUnlocked ? (
+            <div className="mt-5 grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <h3 className="font-semibold" style={{ color: '#0F1923' }}>Seed Global Brain</h3>
+                <textarea
+                  value={seedForm.content}
+                  onChange={(e) => setSeedForm((s) => ({ ...s, content: e.target.value }))}
+                  className="w-full rounded-md p-2 text-sm"
+                  rows={6}
+                  style={{ border: '1px solid #E2E8F0' }}
+                />
+                <select
+                  value={seedForm.namespace}
+                  onChange={(e) => setSeedForm((s) => ({ ...s, namespace: e.target.value }))}
+                  className="w-full rounded-md p-2 text-sm"
+                  style={{ border: '1px solid #E2E8F0' }}
+                >
+                  {['primary_law', 'secondary_law', 'case_law', 'irs_guidance', 'practitioner_patterns'].map((namespace) => (
+                    <option key={namespace} value={namespace}>{namespace}</option>
+                  ))}
+                </select>
+                <select
+                  value={seedForm.confidence_tier}
+                  onChange={(e) => setSeedForm((s) => ({ ...s, confidence_tier: Number(e.target.value) }))}
+                  className="w-full rounded-md p-2 text-sm"
+                  style={{ border: '1px solid #E2E8F0' }}
+                >
+                  {[1, 2, 3, 4].map((tier) => <option key={tier} value={tier}>Confidence Tier {tier}</option>)}
+                </select>
+                <input value={seedForm.source_id} onChange={(e) => setSeedForm((s) => ({ ...s, source_id: e.target.value }))} className="w-full rounded-md px-3 py-2 text-sm" style={{ border: '1px solid #E2E8F0' }} placeholder="Source ID" />
+                <input value={seedForm.description} onChange={(e) => setSeedForm((s) => ({ ...s, description: e.target.value }))} className="w-full rounded-md px-3 py-2 text-sm" style={{ border: '1px solid #E2E8F0' }} placeholder="Description" />
+                <input value={seedForm.citation} onChange={(e) => setSeedForm((s) => ({ ...s, citation: e.target.value }))} className="w-full rounded-md px-3 py-2 text-sm" style={{ border: '1px solid #E2E8F0' }} placeholder="Citation" />
+                <button
+                  type="button"
+                  onClick={() => api.seedGlobal(seedForm, adminKey)}
+                  className="rounded-md px-3 py-2 text-sm text-white"
+                  style={{ backgroundColor: '#B8860B' }}
+                >
+                  Seed to Global Brain
+                </button>
+              </div>
 
-            <div className="space-y-2">
-              <h3 className="font-semibold" style={{ color: '#0F1923' }}>Promote Extraction</h3>
-              <input
-                value={extractionJobId}
-                onChange={(e) => setExtractionJobId(e.target.value)}
-                className="w-full rounded-md px-3 py-2 text-sm"
-                style={{ border: '1px solid #E2E8F0' }}
-                placeholder="Extraction job ID"
-              />
-              <button
-                type="button"
-                onClick={() => api.promoteExtraction(extractionJobId, adminKey)}
-                className="rounded-md px-3 py-2 text-sm text-white"
-                style={{ backgroundColor: '#B8860B' }}
-              >
-                Promote All Chunks to Global
-              </button>
+              <div className="space-y-2">
+                <h3 className="font-semibold" style={{ color: '#0F1923' }}>Promote Extraction</h3>
+                <input
+                  value={extractionJobId}
+                  onChange={(e) => setExtractionJobId(e.target.value)}
+                  className="w-full rounded-md px-3 py-2 text-sm"
+                  style={{ border: '1px solid #E2E8F0' }}
+                  placeholder="Extraction job ID"
+                />
+                <button
+                  type="button"
+                  onClick={() => api.promoteExtraction(extractionJobId, adminKey)}
+                  className="rounded-md px-3 py-2 text-sm text-white"
+                  style={{ backgroundColor: '#B8860B' }}
+                >
+                  Promote All Chunks to Global
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <p className="mt-4 text-sm" style={{ color: '#64748B' }}>Enter admin key to unlock controls.</p>
+          )}
         </section>
 
         <section id="platform-diagnostics" className="rounded-xl border bg-white p-5" style={{ borderColor: '#E2E8F0' }}>
@@ -194,14 +219,18 @@ export default function AdminPage() {
                     <p className="font-semibold" style={{ color: '#0F1923' }}>{diag.name}</p>
                     <p className="text-xs" style={{ color: '#64748B' }}>Version {diag.version}</p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setEditor(diag)}
-                    className="rounded-md px-3 py-1.5 text-sm text-white"
-                    style={{ backgroundColor: '#B8860B' }}
-                  >
-                    Edit
-                  </button>
+                  {adminUnlocked ? (
+                    <button
+                      type="button"
+                      onClick={() => setEditor(diag)}
+                      className="rounded-md px-3 py-1.5 text-sm text-white"
+                      style={{ backgroundColor: '#B8860B' }}
+                    >
+                      Edit
+                    </button>
+                  ) : (
+                    <span className="text-xs" style={{ color: '#64748B' }}>Enter admin key to unlock controls.</span>
+                  )}
                 </div>
                 <p className="mt-2 text-sm line-clamp-2" style={{ color: '#475569' }}>{diag.system_prompt}</p>
               </div>
@@ -238,7 +267,7 @@ export default function AdminPage() {
         </section>
       </main>
 
-      {editor && (
+      {editor && adminUnlocked && (
         <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: 'rgba(0,0,0,0.35)' }}>
           <div className="w-[760px] max-w-[95vw] rounded-xl bg-white p-5">
             <h3 className="text-xl font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif", color: '#0F1923' }}>

@@ -196,11 +196,13 @@ export default function ClientDetailPage({ params }: { params: { id: string } })
       </div>
 
       <div className="flex-1 min-h-0 px-6 py-4">
-        <div className="h-[56vh] min-h-[420px] flex overflow-hidden rounded-xl border" style={{ borderColor: '#E2E8F0' }}>
-          <div className="flex-1 min-w-0">
+        <div className="h-[56vh] min-h-[420px] flex overflow-hidden rounded-xl border" style={{ borderColor: '#E2E8F0', display: 'flex' }}>
+          <div className="flex-1 min-w-0" style={{ flex: 1 }}>
             <EstateCanvas client={client} tenant_id={tenant_id!} onNodeSelect={setSelectedNode} />
           </div>
-          <CouncilBriefingPanel client={client} tenant_id={tenant_id!} selectedNode={selectedNode} />
+          <div style={{ width: 320, flexShrink: 0 }}>
+            <CouncilBriefingPanel client={client} tenant_id={tenant_id!} selectedNode={selectedNode} />
+          </div>
         </div>
 
         <div className="mt-4 h-[calc(100%-56vh-1rem)] min-h-[240px] overflow-hidden rounded-xl border bg-white" style={{ borderColor: '#E2E8F0' }}>

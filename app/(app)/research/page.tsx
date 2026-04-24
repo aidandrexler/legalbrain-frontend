@@ -198,7 +198,7 @@ export default function ResearchPage() {
     <div className="flex h-[calc(100vh-0px)]" style={{ fontFamily: "'Inter', sans-serif" }}>
       <div
         className="w-72 flex-shrink-0 flex flex-col overflow-hidden"
-        style={{ backgroundColor: '#1B2A22', color: '#fff' }}
+        style={{ backgroundColor: '#0F1923', color: '#fff' }}
       >
         <div className="px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
           <h2 className="text-sm font-semibold" style={{ fontFamily: "'Playfair Display', serif", color: '#B8860B' }}>History</h2>

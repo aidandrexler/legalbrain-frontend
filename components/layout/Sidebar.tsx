@@ -11,7 +11,6 @@ import { api } from '@/lib/api';
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { label: 'Clients', href: '/clients', icon: Users },
-  { label: 'Structure Canvas', href: '/clients', icon: Users },
   { label: 'Brain', href: '/brain', icon: Brain },
   { label: 'Research', href: '/research', icon: Search },
   { label: 'Temporal', href: '/temporal', icon: Clock },

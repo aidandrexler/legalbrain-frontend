@@ -7,7 +7,6 @@ import { useTenant } from '@/contexts/TenantContext';
 import { createClient } from '@/lib/supabase/client';
 import { api } from '@/lib/api';
 import FirmInfoCard from '@/components/settings/FirmInfoCard';
-import ApiConfigCard from '@/components/settings/ApiConfigCard';
 import IntegrationsCard from '@/components/settings/IntegrationsCard';
 
 interface OAuthToken {
@@ -197,7 +196,15 @@ export default function SettingsPage() {
       <div className="space-y-5">
         <FirmInfoCard tenant={tenant} onSaved={refreshTenant} />
 
-        <ApiConfigCard tenant={tenant} onSaved={refreshTenant} />
+        <div
+          className="rounded-lg px-4 py-3"
+          style={{ backgroundColor: '#FFFFFF', border: '1px solid #E2E8F0', borderLeft: '4px solid #B8860B' }}
+        >
+          <p className="text-sm leading-relaxed" style={{ color: '#475569' }}>
+            GovInfo, CourtListener, and LegiScan are platform-connected and available
+            to all Forge users automatically. No configuration needed.
+          </p>
+        </div>
 
         {!loadingTokens && (
           <IntegrationsCard
