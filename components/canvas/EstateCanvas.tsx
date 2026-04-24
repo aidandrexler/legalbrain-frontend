@@ -77,7 +77,7 @@ interface EstateCanvasProps {
   onNodeSelect: (node: Node<EstateNodeData> | null) => void;
 }
 
-const TYPE_ICON: Record<EstateNodeType, React.ComponentType<{ size?: number; color?: string }>> = {
+const TYPE_ICON: Record<EstateNodeType, React.ComponentType<any>> = {
   person: User,
   spouse: Heart,
   child: Users,
