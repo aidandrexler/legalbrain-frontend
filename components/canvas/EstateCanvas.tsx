@@ -63,6 +63,7 @@ interface ClientLike {
 }
 
 interface EstateNodeData {
+  [key: string]: unknown;
   label: string;
   node_type: EstateNodeType;
   risk_level: 'red' | 'amber' | 'green' | 'slate';
